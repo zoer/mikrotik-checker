@@ -8,6 +8,13 @@
 :local mailSubject "New version of mikrotik's firmware has been released.";
 :local filename "new-version.txt";
 
+# heroku wake up
+:do {
+  /tool fetch url="http://mikrotik-version.herokuapp.com/" mode=http
+  keep-result=no;
+
+} on-error={ :delay 10s  }
+
 /tool fetch url="http://mikrotik-version.herokuapp.com/check/$clientID"
 mode=http dst-path=$filename;
 :local result [/file get $filename contents];
